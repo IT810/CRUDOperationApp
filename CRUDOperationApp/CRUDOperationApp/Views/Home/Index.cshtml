@@ -1,31 +1,78 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    ViewBag.Title = "Danh sách sinh viên";
 }
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/Student.js"></script>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div ng-app="myApp">
+    <div ng-controller="myController">
+        <div class="form-horizontal" role="form">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input type="hidden" ng-model="SId" />
+                        <div class="form-group">
+                            <label class="control-label">Student Name:</label>
+                            <input type="text" class="form-control" ng-model="SName" placeholder="Enter name..." />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Student Age:</label>
+                            <input type="text" class="form-control" ng-model="SAge" placeholder="Enter age..." />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Student Department:</label>
+                            <input type="text" class="form-control" ng-model="SDepartment" placeholder="Enter department..."/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="button" value="Add" id="insert" class="btn btn-success btn-block" ng-click="InsertStudent()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-init="GetAllStudents()">
+            <h4>Student Record</h4>
+            <table class="table table-bordered table-hover" id="myTable">
+                <thead class="bg-primary">
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Age</th>
+                        <th class="text-center">Department</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in students">
+                        <td class="text-center">{{item.Id}}</td>
+                        <td class="text-center">{{item.Name}}</td>
+                        <td class="text-center">{{item.Age}}</td>
+                        <td class="text-center">{{item.Department}}</td>
+                        <td class="text-center">
+                            <input type="button" ng-click="UpdateStudent(item)" value="Update" class="btn btn-warning" />
+                            <input type="button" ng-click="DeleteStudent(item)" value="Delete" class="btn btn-danger"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>    
+}
